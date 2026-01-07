@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section style="text-align:center; margin:50px; max-width:600px; margin-left:auto; margin-right:auto; padding:20px; background-color:#f8f8f8; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+    <h2>Réservation réussie !</h2>
+    <p>Merci, votre réservation a été enregistrée.</p>
+</section>
+<input type="date" id="searchDate">
+<button onclick="loadBookings()">Voir réservations</button>
+
+<ul id="result"></ul>
+
+<script>
+function loadBookings() {
+    const date = document.getElementById("searchDate").value;
+
+    fetch(`/api/bookings/date/?date=${date}`)
+        .then(res => res.json())
+        .then(data => {
+            const list = document.getElementById("result");
+            list.innerHTML = "";
+
+            if (data.message) {
+                list.innerHTML = `<li>${data.message}</li>`;
+            } else {
+                data.forEach(item => {
+                    list.innerHTML += `<li>${item.creneau} - ${item.guest_number} personnes</li>`;
+                });
+            }
+        });
+}
+</script>
+
+
+{% endblock %}

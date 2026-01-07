@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+/* Conteneur principal */
+.booking-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 25px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+/* Titre */
+.booking-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Champ date */
+.booking-container input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+}
+
+/* Bouton */
+.booking-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #495E57;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.booking-container button:hover {
+    background-color: #3d5049;
+}
+
+/* Résultats */
+#result {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+/* Carte réservation */
+#result li {
+    background: #f4f4f4;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Message vide */
+.no-booking {
+    text-align: center;
+    color: #777;
+}
+</style>
+
+<div class="booking-container">
+    <h2>📋 Réservations</h2>
+
+    <input type="date" id="searchDate">
+
+    <button onclick="loadBookings()">Voir les réservations</button>
+
+    <ul id="result"></ul>
+</div>
+
+<script>
+function loadBookings() {
+    const date = document.getElementById("searchDate").value;
+    const list = document.getElementById("result");
+
+    list.innerHTML = "";
+
+    if (!date) {
+        list.innerHTML = `<li class="no-booking">Veuillez sélectionner une date</li>`;
+        return;
+    }
+
+    fetch(`/api/bookings/date/?date=${date}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.message) {
+                list.innerHTML = `<li class="no-booking">${data.message}</li>`;
+            } else {
+                data.forEach(item => {
+                    list.innerHTML += `
+                        <li>
+                            <span>${item.creneau}</span>
+                            <strong>${item.guest_number} pers.</strong>
+                        </li>
+                    `;
+                });
+            }
+        });
+}
+</script>
+
+{% endblock %}

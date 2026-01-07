@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.about-section {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+.about-section h2 {
+    text-align: center;
+    font-size: 32px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.about-section p {
+    font-size: 16px;
+    color: #555;
+    text-align: justify;
+    text-justify: inter-word;
+}
+img{
+    height: 100px;
+}
+</style>
+
+<section class="about-section">
+    <div></div>
+    <h2>A propos de Little-Lemon</h2>
+    <img src="{% static 'img/Logo.svg' %}" alt="Logo Little-Lemon">
+    <p>
+        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque 
+        laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
+        beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
+        odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi neque
+        porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, s
+    </p>
+</section>
+
+{% endblock %}

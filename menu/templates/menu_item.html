@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.detail-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+}
+
+.detail-image {
+    max-width: 400px;
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.detail-info {
+    max-width: 500px;
+}
+
+.detail-info h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.detail-info p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.detail-info .price {
+    font-weight: bold;
+    font-size: 20px;
+    color: #27ae60;
+}
+</style>
+
+<section class="detail-container">
+    {% if menu_item.image %}
+        <img class="detail-image" src="{{ menu_item.image.url }}" alt="{{ menu_item.name }}">
+    {% else %}
+        <img class="detail-image" src="{% static 'images/placeholder.jpg' %}" alt="Image non disponible">
+    {% endif %}
+
+    <div class="detail-info">
+        <h2>{{ menu_item.name }}</h2>
+        <p>{{ menu_item.menu_item_description }}</p>
+        <p class="price">Price: ${{ menu_item.price }}.00</p>
+    </div>
+</section>
+
+{% endblock %}

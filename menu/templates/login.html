@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Connexion</h2>
+
+<form id="loginForm" method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required><br><br>
+    <input type="password" id="password" name="password" placeholder="Mot de passe" required><br><br>
+    <button type="submit">Se connecter</button>
+</form>
+
+<p id="msg"></p>
+
+<script>
+document.getElementById("loginForm").onsubmit = async function(e){
+    e.preventDefault();
+
+    const response = await fetch("/api/token/", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            username: username.value,
+            password: password.value
+        })
+    });
+
+    const data = await response.json();
+
+    if(response.ok){
+        localStorage.setItem("token", data.access);
+        msg.innerText = "Connexion réussie !";
+        window.location.href = "/"; // redirection après login
+    } else {
+        msg.innerText = "Identifiants incorrects";
+    }
+}
+</script>
+{% endblock %}

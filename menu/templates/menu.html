@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Menu</h2>
+
+<ul>
+    {% for item in menus %}
+        <li>
+            <a href="{% url 'menu_item' pk=item.pk %}">
+                {{ item.name }} – {{ item.price }} GNF
+            </a>
+        </li>
+    {% empty %}
+        <li>Aucun plat disponible</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
