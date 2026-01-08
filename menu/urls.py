@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('', views.home, name="home"),
@@ -10,6 +11,7 @@ urlpatterns = [
     path('menu-item/<int:pk>/', views.display_menu_item, name='menu_item'),
     path('register/', views.register, name='register'),
     path('login/', views.login_page, name='login'),
+    path('api-token-auth/', obtain_auth_token, name='api-token-auth'),
 
     # API
     path('api/menu/', views.MenuListCreateView.as_view()),
